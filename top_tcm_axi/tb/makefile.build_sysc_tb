@@ -17,7 +17,7 @@ INCLUDE_PATH += ./verilated
 INCLUDE_PATH += ../../isa_sim
 INCLUDE_PATH += $(VERILATOR_SRC)
 INCLUDE_PATH += $(VERILATOR_SRC)/vltstd
-INCLUDE_PATH += $(SYSTEMC_HOME)/include
+#INCLUDE_PATH += $(SYSTEMC_HOME)/include
 
 # Dependancies
 LIB_PATH     ?=
@@ -28,7 +28,7 @@ LIBS          = -lisa_sim -lsyscverilated -lelf -lbfd
 # Flags
 CFLAGS       ?= -fpic -O2
 CFLAGS       += $(patsubst %,-I%,$(INCLUDE_PATH))
-CFLAGS       += -DVM_TRACE=1
+CFLAGS       += -DVM_TRACE=0
 LDFLAGS      ?= -O2
 LDFLAGS      += -L$(SYSTEMC_HOME)/lib-linux64 
 LDFLAGS      += $(patsubst %,-L%,$(LIB_PATH))
@@ -45,7 +45,8 @@ OBJ          ?= $(foreach src,$(SRC),$(call src2obj,$(src)))
 ###############################################################################
 define template_c
 $(call src2obj,$(1)): $(1) | $(OBJ_DIR)
-	g++ $(CFLAGS) -c $$< -o $$@
+#	sccom $(CFLAGS) -c $$< -o $$@
+	sccom $(CFLAGS) -c $$<
 endef
 
 all: $(EXE_DIR)$(TARGET)
@@ -55,8 +56,9 @@ $(OBJ_DIR) $(EXE_DIR):
 
 $(foreach src,$(SRC),$(eval $(call template_c,$(src))))
 
-$(EXE_DIR)$(TARGET): $(OBJ) | $(EXE_DIR) 
-	g++ $(LDFLAGS) $(OBJ) -o $@ -lsystemc $(LIBS)
+$(EXE_DIR)$(TARGET): $(OBJ) | $(EXE_DIR)
+#	sccom $(LDFLAGS) $(OBJ) -o $@ -lsystemc $(LIBS)
+	sccom $(LDFLAGS) $(OBJ) $(LIBS)
 
 clean:
 	rm -rf $(EXE_DIR) $(OBJ_DIR) $(EXTRA_CLEAN_FILES)

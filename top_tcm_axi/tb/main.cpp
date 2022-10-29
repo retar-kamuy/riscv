@@ -78,6 +78,8 @@ static void sigint_handler(int s)
 //--------------------------------------------------------------------
 // sc_main
 //--------------------------------------------------------------------
+SC_MODULE_EXPORT(testbench);
+
 int sc_main(int argc, char* argv[])
 {
     bool trace            = true;

@@ -11,7 +11,8 @@
 //-------------------------------------------------------------
 riscv_tcm_top_rtl::riscv_tcm_top_rtl(sc_module_name name): sc_module(name)
 {
-    m_rtl = new Vriscv_tcm_top("Vriscv_tcm_top");
+    //m_rtl = new Vriscv_tcm_top("Vriscv_tcm_top");
+    m_rtl = new Vriscv_tcm_top{"riscv_tcm_top", "Vriscv_tcm_top", 0, NULL};
     m_rtl->clk_i(m_clk_in);
     m_rtl->rst_i(m_rst_in);
     m_rtl->rst_cpu_i(m_rst_cpu_in);

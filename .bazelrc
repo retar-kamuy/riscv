@@ -1,0 +1,13 @@
+# Env
+
+build --action_env=SYSTEMC_HOME=/usr/local/systemc-2.3.2
+build --action_env=SYSTEMC_INCLUDE=$SYSTEMC_HOME/include
+build --action_env=SYSTEMC_LIBDIR=$SYSTEMC_HOME/lib-linux64
+build --action_env=LD_LIBRARY_PATH=$SYSTEMC_LIBDIR:$LD_LIBRARY_PATH
+
+build --action_env=MTI_HOME=/opt/intelFPGA/22.2/questa_fse
+
+# Options
+
+common --color=yes
+test --verbose_failures --test_output=all

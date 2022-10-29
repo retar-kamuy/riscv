@@ -1,0 +1,12 @@
+sccom ./isa_sim/riscv.cpp ./isa_sim/riscv_inst_dump.cpp ./isa_sim/cosim_api.cpp ./isa_sim/riscv_main.cpp ./isa_sim/elf_load.cpp ./isa_sim/main.cpp -L/usr/local/systemc-2.3.2/lib-linux64 -lelf -lbfd
+
+vlog ./core/riscv/riscv_defs.v ./core/riscv/riscv_csr.v ./core/riscv/riscv_csr_regfile.v ./core/riscv/riscv_divider.v ./core/riscv/riscv_lsu.v ./core/riscv/riscv_alu.v ./core/riscv/riscv_issue.v ./core/riscv/riscv_exec.v ./core/riscv/riscv_xilinx_2r1w.v ./core/riscv/riscv_mmu.v ./core/riscv/riscv_decoder.v ./core/riscv/riscv_decode.v ./core/riscv/riscv_trace_sim.v ./core/riscv/riscv_multiplier.v ./core/riscv/riscv_regfile.v ./core/riscv/riscv_pipe_ctrl.v ./core/riscv/riscv_core.v ./core/riscv/riscv_fetch.v -l vlog_riscv.log
+
+vlog ./top_tcm_axi/src_v/dport_axi.v ./top_tcm_axi/src_v/dport_mux.v ./top_tcm_axi/src_v/tcm_mem.v ./top_tcm_axi/src_v/tcm_mem_pmem.v ./top_tcm_axi/src_v/tcm_mem_ram.v ./top_tcm_axi/src_v/riscv_tcm_top.v -l vlog_top_tcm_axi.log
+
+scgenmod -bool -sc_uint -o Vriscv_tcm_top.h Vriscv_tcm_top
+
+
+sccom ./top_tcm_axi/tb/riscv_tcm_top_rtl.cpp ./top_tcm_axi/tb/main.cpp -fpic -O2 -I./ -I./top_tcm_axi/tb -I./isa_sim -I./verilated -I./isa_sim -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_TRACE=0 -lelf -lbfd
+
+vsim -c testbench -wlf vsim.wlf -l vsim.log -do "add wave -r /*; run -all; quit"
