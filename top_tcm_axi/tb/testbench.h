@@ -137,7 +137,7 @@ public:
     bool      get_fault(void)  { return false; }
     void      set_interrupt(int irq)   { }
     void      enable_trace(uint32_t mask) { }
-    uint32_t  get_opcode(void)    { }
+    uint32_t  get_opcode(void)    { return 0; }
     uint32_t  get_pc(void)        { return 0; }
     bool      get_reg_valid(int r){ return 0; }
     uint32_t  get_register(int r) { return 0; }

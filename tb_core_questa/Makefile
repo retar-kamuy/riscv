@@ -17,7 +17,7 @@ endif
 ###############################################################################
 TRACE          ?= 1
 
-SRC_V_DIR      ?= ../../src/core .
+SRC_V_DIR      ?= ../core/riscv .
 SRC_DIR        ?= .
 
 #EXE            ?= output.out
